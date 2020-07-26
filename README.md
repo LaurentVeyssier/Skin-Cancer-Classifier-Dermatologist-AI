@@ -10,7 +10,7 @@ The data and objective are pulled from the [2017 ISIC Challenge on Skin Lesion A
 
 ![](asset/skin_disease_classes.png)
 
-I used 3 pre-trained models (VGG19, Inception-V3, ResNet152) to benefit from transfer learning. I adjusted the classification end of the network to the task at hand (classification between 3 labels).  I used the training and validation data to train a model that can distinguish between the three different image classes.
+I used 3 pre-trained models (VGG16, Inception-V3, ResNet152) to benefit from transfer learning. I adjusted the classification end of the network to the task at hand (classification between 3 labels).  I used the training and validation data to train a model that can distinguish between the three different image classes.
 Then, the test images are used to gauge the performance of the model.
 
 I eliminated samples from the training set which displayed large object to measure the size of the lesion. So the training was performed on a reduced set of 1880 images vs the 2000 which are provided.
@@ -29,9 +29,22 @@ Your file should have exactly 3 columns:
 
 Once the CSV file is obtained, the notebook provides the scores in the three categories. It also provides the corresponding ROC curves, along with the confusion matrix corresponding to melanoma classification. Note that you can also use the `get_results.py` file to score your submission.
 
-## Dependencies
-
 ## Content
+- Mount Google Drive
+- Select folder with notebook and data folder in google colab
+- Download the datasets and unzip into data folder
+- import librairies and count available samples
+- explore the data
+- calculate corrective weights to compensate for skewness
+- Set Dataloader
+- Define train, validate and test functions
+- Train the models
+    - Obtain pre-trained VGG16 and adjust classifier section
+    - specify loss function and optimizer
+    - train and test the model
+   - Repeat with Inception V3 and ResNet-152
+ - Get predictions and prepare results file
+ - Evaluate predictions and plot scores, ROC and confusion matrix
 
 ## Getting started
 1.	Clone the repository and create a `data/` folder to hold the dataset of skin images.
