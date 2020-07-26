@@ -8,7 +8,7 @@ This project can visually diagnose between 3 types of skin lesions: melanoma, th
 
 The data and objective are pulled from the [2017 ISIC Challenge on Skin Lesion Analysis Towards Melanoma Detection](https://challenge.kitware.com/#challenge/583f126bcad3a51cc66c8d9a). As part of the challenge, participants were tasked to design an algorithm to diagnose skin lesion images as one of three different skin diseases (melanoma, nevus, or seborrheic keratosis).
 
-![](asset/skin_desease_classes.png)
+![](asset/skin_disease_classes.png)
 
 I used 3 pre-trained models (VVG19, Inception-V3, ResNet152) to benefit from transfer learning. I adjusted the classification end of the network to the task at hand (classification between 3 labels).  I used the training and validation data to train a model that can distinguish between the three different image classes.
 Then, the test images are used to gauge the performance of the model.
