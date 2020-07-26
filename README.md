@@ -10,7 +10,7 @@ The data and objective are pulled from the [2017 ISIC Challenge on Skin Lesion A
 
 ![](asset/skin_disease_classes.png)
 
-I used 3 pre-trained models (VVG19, Inception-V3, ResNet152) to benefit from transfer learning. I adjusted the classification end of the network to the task at hand (classification between 3 labels).  I used the training and validation data to train a model that can distinguish between the three different image classes.
+I used 3 pre-trained models (VGG19, Inception-V3, ResNet152) to benefit from transfer learning. I adjusted the classification end of the network to the task at hand (classification between 3 labels).  I used the training and validation data to train a model that can distinguish between the three different image classes.
 Then, the test images are used to gauge the performance of the model.
 
 ## Getting the Results
