@@ -13,6 +13,10 @@ The data and objective are pulled from the [2017 ISIC Challenge on Skin Lesion A
 I used 3 pre-trained models (VGG19, Inception-V3, ResNet152) to benefit from transfer learning. I adjusted the classification end of the network to the task at hand (classification between 3 labels).  I used the training and validation data to train a model that can distinguish between the three different image classes.
 Then, the test images are used to gauge the performance of the model.
 
+I eliminated samples from the training set which displayed large object to measure the size of the lesion. So the training was performed on a reduced set of 1880 images vs the 2000 which are provided.
+
+Due to the large class imbalance in the training set (nevus is significantly over-represented), i tried to compensate by calculating weights to provide to the loss function during training. This did not prove efficient and penalized the overall accuracy of the model. So I did not use this option in the final runs.
+
 ## Getting the Results
 Once you have trained your model, create a CSV file to store your test predictions. Your file should have exactly 600 rows, each corresponding to a different test image, plus a header row. You can find an example submission file (`sample_submission.csv`) in the repository.
 
