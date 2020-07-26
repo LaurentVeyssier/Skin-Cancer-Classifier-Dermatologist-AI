@@ -1,5 +1,5 @@
 # Skin-Cancer-Classifier
-CNN pre-trained model to visually diagnose between 3 types of skin lesions
+CNN pre-trained model to visually diagnose between 3 types of skin lesions.
 
 This "Dermatologist-ai" project is part of my [Deep Learning Nanodegree with Udacity](https://www.udacity.com/course/deep-learning-nanodegree--nd101). The skin cancer classification model was trained and tested on google colab.
 
@@ -21,7 +21,7 @@ Your file should have exactly 3 columns:
 - `task_1` - the model's predicted probability that the image (at the path in Id) depicts melanoma
 - `task_2` - the model's predicted probability that the image (at the path in Id) depicts seborrheic keratosis
 
-Once the CSV file is obtained, you will use the `get_results.py` file to score your submission and obtain the scores in the three categories. This can be performed in the notebook. It also provides the corresponding ROC curves, along with the confusion matrix corresponding to melanoma classification.
+Once the CSV file is obtained, the notebook provides the scores in the three categories. It also provides the corresponding ROC curves, along with the confusion matrix corresponding to melanoma classification. Note that you can also use the `get_results.py` file to score your submission.
 
 ## Dependencies
 
