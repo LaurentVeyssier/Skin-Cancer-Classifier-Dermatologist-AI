@@ -17,6 +17,8 @@ I eliminated samples from the training set which displayed large object to measu
 
 Due to the large class imbalance in the training set (nevus is significantly over-represented), i tried to compensate by calculating weights to provide to the loss function during training. This did not prove efficient and penalized the overall accuracy of the model. So I did not use this option in the final runs.
 
+I used various data augmentation techniques. Avaialble images were of multiple sizes and reshaped to 299x299 (Inception) or 224x224 (other models). Inception V3's auxillary output was used.
+
 ## Getting the Results
 Once you have trained your model, create a CSV file to store your test predictions. Your file should have exactly 600 rows, each corresponding to a different test image, plus a header row. You can find an example submission file (`sample_submission.csv`) in the repository.
 
