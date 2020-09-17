@@ -1,5 +1,5 @@
 # Skin-Cancer-Classifier
-Use CNN model to visually diagnose between 3 types of skin lesions.
+Use CNN model to visually diagnose between 3 types of skin lesions using dermoscopic images.
 
 This "Dermatologist-ai" project is part of the [Deep Learning Nanodegree with Udacity](https://www.udacity.com/course/deep-learning-nanodegree--nd101). The skin cancer classification model was trained and tested using both own GPU and google colab.
 
@@ -26,14 +26,39 @@ Due to the class imbalance in the training set (seborrheic keratosis is signific
 I used various augmentation techniques for the training set to expand beyond the circa 3,200 images now available. In addition, available images came with multiple resolutions (for example (2592, 1936, 3)). The pre-trained models must have input images with minimum resolution of 299x299 (for Inception) or 224x224 (other models). In order to preserve details as much as possible (downsampling of images is at the expense of pixels), I determined the smallest dimensions available in the dataset, ie 450 x 576, and decided to resize images to that maximum possible uniform size. This obviously increase memory and computation requierements and necessitate to reduce the batch_size to avoid memory crash.
 
 ## Model architecture
-VGG model did not provide strong performance (below 55% accuracy after 10 epochs). Note that random guess over the 3 classes is 33%. Inception V3 reached 64% overall accuracy after 10 epochs. So I focused on this model.
+VGG model did not deliver best performance (below 55% accuracy after 10 epochs). Note that random guess over the 3 classes is 33%. Inception V3 reached 64% overall accuracy after 10 epochs. So I focused on this model.
 
-- Recap summary on InceptionV3 concept.
-Inception V3 is an improvement over previous versions of this architecture. The objective of its creators at Google was to reduce the number of parameters so that the model is less computational intensive, less prone to overfitting and allows to go really deep. This was proposed in the following [paper](https://arxiv.org/abs/1512.00567) in 2015.
+- Recap on Inception V3 architecture (inspired from this [paper](https://medium.com/@sh.tsang/review-inception-v3-1st-runner-up-image-classification-in-ilsvrc-2015-17915421f77c)).
+Inception V3 is an improvement over previous versions of this architecture. The V3 objective was to reduce the number of parameters so that the model is less computational intensive, less prone to overfitting and allows to go really deep. This was proposed in the following [paper](https://arxiv.org/abs/1512.00567) published by V3's creators at Google in 2015.
 The network as 42 layers overall. The reduction in parameters is achieved using various techniques. The techniques include factorized convolutions, regularization, dimension reduction, and parallelized computations.
--	Factorization: The aim of factorizing convolutions is to reduce the number of connections/parameters without decreasing the network efficiency. Factorization is performed by switching large kernel-size convolutions to smaller ones: convolutions involving large kernel size (5x5 or 7x7) are replaced by successive convolutions of smaller size : 5x5 -> two 3x3. This allows to reduce the number of parameters from 5*5=25 to 3*3 + 3*3 = 18 which is nearly 30% less.
+-	Factorization: The aim of factorizing convolutions is to reduce the number of connections/parameters without decreasing the network efficiency. Factorization is performed by switching large kernel-size convolutions to smaller ones: convolutions involving large kernel size (5x5 or 7x7) are replaced by successive smaller size convolutions. Ex: 5x5 -> two 3x3. This allows to reduce the number of parameters from 5*5=25 to 3*3 + 3*3 = 18 which is nearly 30% less.
 
+![](asset/3by3.png)
 
+Consequently, Inception's Module A is replaced using convolution factorization.
+
+![](asset/moduleA.png)
+
+Next approach is Factorization into Asymmetric Convolutions: One 3×1 convolution followed by one 1×3 convolution replaces one 3×3 convolution as follows. The reduction in paramaters is 33%....
+
+![](asset/3by1.png)
+
+....leading to this type of module architecture (applicable to n x n convolutions):
+
+![](asset/moduleB.png)
+
+- Regularization: Inception V3 uses an auxiliary classifier on the top of the last 17×17 layer. This acts as a regularizer. An auxiliary classifier is a small CNN inserted between layers and the loss incurred during training is added to the main network loss (by penalizing the loss reduction objective, the auxilliary acts as regulizer). The loss is added with a weight of 0.4: `total_loss = main_loss + 0.4 * auxilliary_loss`.
+The original motivation was to push useful gradients to the lower layers to make them immediately useful and improve the convergence during training by combating the vanishing gradient problem in very deep networks.
+
+![](asset/auxilliary.png)
+
+- Dimension reduction: Conventionally the feature map downsizing is done by max pooling. Inception V3 achieves the same ouput differently so that to reduce computational resources. Here, 320 feature maps are obtained using convolution with stride 2 while another 320 feature maps are obtained by max pooling. These 2 sets of 320 feature maps are then concatenated to output 640 feature maps.
+
+![](asset/reduction.png)
+
+Overall, Inception V3 model has 24 million parameters, which is only 17% of VGG. This is nearly 6 x less parameters !
+
+![](asset/final.png)
 
 ## Getting the Results
 Once you have trained your model, create a CSV file to store your test predictions. Your file should have exactly 600 rows, each corresponding to a different test image, plus a header row. You can find an example submission file (`sample_submission.csv`) in the repository.
