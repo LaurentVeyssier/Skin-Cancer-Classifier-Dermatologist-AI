@@ -17,7 +17,7 @@ Then, the test images are used to gauge the performance of the model on unseen i
 
 The proposed training, validation and test sets contain 2000, 160, 600 high-res RGB images respectively. The distribution between classes in the train set is heterogeneous. Nevus is highly over-represented (4 x to 5x more images than the other two classes). I therefore used [ISIC database](https://www.isic-archive.com/#!/topWithHeader/onlyHeaderTop/gallery?filter=%5B%5D) to augment the number of under represented classes. I added about 1,160 new training images which i could find for Melanoma and seborrheic keratosis. The training dataset had the following final composition:
 
-![](asset/train_set.jpg)
+![](asset/train_set.png)
 
 Due to the large class imbalance in the training set (nevus is significantly over-represented), i tried to compensate by calculating weights to provide to the loss function during training. This did not prove efficient and penalized the overall accuracy of the model. So I did not use this option in the final runs.
 
