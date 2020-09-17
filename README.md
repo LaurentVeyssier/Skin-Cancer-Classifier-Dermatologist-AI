@@ -10,18 +10,30 @@ The data and objective are pulled from the [2017 ISIC Challenge on Skin Lesion A
 
 ![](asset/skin_disease_classes.png)
 
-I started off with 3 pre-trained models (VGG16, Inception-V3, ResNet152) to benefit from transfer learning. These models have been already heaviliy trained for classification tasks using ImageNet database. ImageNet is a dataset of over 15 millions labeled high-resolution images with around 22,000 categories. To train these models, ILSVRC uses a subset of ImageNet of around 1000 images in each of 1000 categories. In all, there are roughly 1.2 million training images, 50,000 validation images and 100,000 testing images.
+## Approach
+I started off with 3 pre-trained models (VGG16, Inception-V3, ResNet152) to benefit from transfer learning. These models have been already heavily trained for classification tasks using ImageNet database. ImageNet is a dataset of over 15 millions labeled high-resolution images with around 22,000 categories. To train these models, ILSVRC uses a subset of ImageNet of around 1000 images in each of 1000 categories. In all, there are roughly 1.2 million training images, 50,000 validation images and 100,000 testing images.
 
 I adjusted the classification end of these networks to the task at hand (classification between 3 labels only).  I used the training and validation data to train a model that can distinguish between the three different image classes, saving the best parameters based on the reduction of the loss on the validation data.
 Then, the test images are used to gauge the performance of the model on unseen images.
 
+## Dataset
 The proposed training, validation and test sets contain 2000, 160, 600 high-res RGB images respectively. The distribution between classes in the train set is heterogeneous. Nevus is highly over-represented (4 x to 5x more images than the other two classes). I therefore used [ISIC database](https://www.isic-archive.com/#!/topWithHeader/onlyHeaderTop/gallery?filter=%5B%5D) to augment the number of under represented classes. I added about 1,160 new training images which i could find for Melanoma and seborrheic keratosis. The training dataset had the following final composition:
 
 ![](asset/train_set.png)
 
-Due to the large class imbalance in the training set (nevus is significantly over-represented), i tried to compensate by calculating weights to provide to the loss function during training. This did not prove efficient and penalized the overall accuracy of the model. So I did not use this option in the final runs.
+Due to the class imbalance in the training set (seborrheic keratosis is significantly under-represented), it is possible to compensate by calculating weights to provide to the loss function during training. This did not prove efficient and penalized the overall accuracy of the model. So I did not use this option in the final runs.
 
-I used various data augmentation techniques. Available images were of multiple sizes and reshaped to 299x299 (Inception) or 224x224 (other models). Inception V3's auxillary output was used.
+I used various augmentation techniques for the training set to expand beyond the circa 3,200 images now available. In addition, available images came with multiple resolutions (for example (2592, 1936, 3)). The pre-trained models must have input images with minimum resolution of 299x299 (for Inception) or 224x224 (other models). In order to preserve details as much as possible (downsampling of images is at the expense of pixels), I determined the smallest dimensions available in the dataset, ie 450 x 576, and decided to resize images to that maximum possible uniform size. This obviously increase memory and computation requierements and necessitate to reduce the batch_size to avoid memory crash.
+
+## Model architecture
+VGG model did not provide strong performance (below 55% accuracy after 10 epochs). Note that random guess over the 3 classes is 33%. Inception V3 reached 64% overall accuracy after 10 epochs. So I focused on this model.
+
+- Recap summary on InceptionV3 concept.
+Inception V3 is an improvement over previous versions of this architecture. The objective of its creators at Google was to reduce the number of parameters so that the model is less computational intensive, less prone to overfitting and allows to go really deep. This was proposed in the following [paper](https://arxiv.org/abs/1512.00567) in 2015.
+The network as 42 layers overall. The reduction in parameters is achieved using various techniques. The techniques include factorized convolutions, regularization, dimension reduction, and parallelized computations.
+-	Factorization: The aim of factorizing convolutions is to reduce the number of connections/parameters without decreasing the network efficiency. Factorization is performed by switching large kernel-size convolutions to smaller ones: convolutions involving large kernel size (5x5 or 7x7) are replaced by successive convolutions of smaller size : 5x5 -> two 3x3. This allows to reduce the number of parameters from 5*5=25 to 3*3 + 3*3 = 18 which is nearly 30% less.
+
+
 
 ## Getting the Results
 Once you have trained your model, create a CSV file to store your test predictions. Your file should have exactly 600 rows, each corresponding to a different test image, plus a header row. You can find an example submission file (`sample_submission.csv`) in the repository.
@@ -62,3 +74,7 @@ I developed and run my notebook on Google Colab. To access the data, I mount my 
 
 
 ## Results
+
+![](asset/accuracy.png)
+
+![](asset/ROC.png)
