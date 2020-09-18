@@ -85,6 +85,8 @@ Overall, Inception V3 model has 24 million parameters, which is only 17% of VGG.
 
 ![](asset/final.png)
 
+![](asset/inceptionv3.png)
+
 ## Getting the Results
 Once the model is trained, the notebook creates a CSV file to store test predictions. The file has exactly 600 rows, each corresponding to a different test image, plus a header row. You can find an example submission file (`sample_submission.csv`) in the repository.
 
