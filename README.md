@@ -58,11 +58,11 @@ Inception V3 is an improvement over previous versions of this architecture. The 
 The network as 42 layers overall. The reduction in parameters is achieved using various techniques. The techniques include factorized convolutions, regularization, dimension reduction, and parallelized computations.
 -	Factorization: The aim of factorizing convolutions is to reduce the number of connections/parameters without decreasing the network efficiency. Factorization is performed by switching large kernel-size convolutions to smaller ones: convolutions involving large kernel size (5x5 or 7x7) are replaced by successive smaller size convolutions. Ex: 5x5 -> two 3x3. This allows to reduce the number of parameters from 5 x 5 = 25 to 3 x 3 + 3 x 3 = 18 which is nearly 30% less. Consequently, Inception's Module A is replaced using convolution factorization.
 
-![](asset/3by3.png)                                                  ![](asset/moduleA.png)
+![](asset/3by3.png)                                               ![](asset/moduleA.png)
 
 Next approach is Factorization into Asymmetric Convolutions: One 3×1 convolution followed by one 1×3 convolution replaces one 3×3 convolution as follows. The reduction in paramaters is 33%........leading to this type of module architecture (applicable to n x n convolutions):
 
-![](asset/3by1.png)                                                    ![](asset/moduleB.png)
+![](asset/3by1.png)                                               ![](asset/moduleB.png)
 
 - Regularization: Inception V3 uses an auxiliary classifier on the top of the last 17×17 layer. This acts as a regularizer. An auxiliary classifier is a small CNN inserted between layers and the loss incurred during training is added to the main network loss (by penalizing the loss reduction objective, the auxilliary acts as regulizer). The loss is added with a weight of 0.4: `total_loss = main_loss + 0.4 * auxilliary_loss`.
 The original motivation was to push useful gradients to the lower layers to make them immediately useful and improve the convergence during training by combating the vanishing gradient problem in very deep networks.
@@ -80,9 +80,11 @@ Overall, Inception V3 model has 24 million parameters, which is only 17% of VGG.
 ![](asset/inceptionV3.png)
 
 
-ResNet152 was designed by Microsoft teams in 2015 to provide a class of network efficient despite being very deep (cf [paper](https://arxiv.org/abs/1512.03385)). This version is the deepest amongst ResNet family. ResNet stands for "residual network". The main novalty is the introduction of skip connections using a technique called "residual mapping" to fight against deep network's performance degradation. Residual mapping allows shortcut connections using identify F(x)+x (see illustration below). ResNet class achieves higher accuracy when the depth of the network increases, producing results that are better than standard networks. The table below shows the layers and parameters in the different ResNet architectures.
+ResNet152 was designed by Microsoft teams in 2015 to provide a class of network efficient despite being very deep (cf [paper](https://arxiv.org/abs/1512.03385)). This version is the deepest amongst ResNet family. ResNet stands for "residual network". The main novalty is the introduction of skip connections using a technique called "residual mapping" to fight against deep network's performance degradation. Residual mapping allows shortcut connections using identify F(x)+x (see illustration below). 
 
 ![](asset/residuallearning.png)                            ![](asset/resnet.png)
+
+ResNet class achieves higher accuracy when the depth of the network increases, producing results that are better than standard networks. The table below shows the layers and parameters in the different ResNet architectures.
 
 ![](asset/resnet152.png)
 
