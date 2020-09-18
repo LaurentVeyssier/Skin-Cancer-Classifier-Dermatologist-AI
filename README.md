@@ -79,6 +79,14 @@ Overall, Inception V3 model has 24 million parameters, which is only 17% of VGG.
 
 ![](asset/inceptionV3.png)
 
+
+ResNet152 was designed by Microsoft teams in 2015 to provide a class of network efficient despite being very deep (cf [paper](https://arxiv.org/abs/1512.03385)). This version is the deepest amongst ResNet family. ResNet stands for "residual network". The main novalty is the introduction of skip connections using a technique called "residual mapping" to fight against deep network's performance degradation. Residual mapping allows shortcut connections using identify F(x)+x (see illustration below). ResNet class achieves higher accuracy when the depth of the network increases, producing results that are better than standard networks. The table below shows the layers and parameters in the different ResNet architectures.
+
+![](asset/residuallearning.png)                            ![](asset/resnet.png)
+
+![](asset/resnet152.png)
+
+
 ## Getting the Results
 Once the model is trained, the notebook creates a CSV file to store test predictions. The file has exactly 600 rows, each corresponding to a different test image, plus a header row. You can find an example submission file (`sample_submission.csv`) in the repository.
 
