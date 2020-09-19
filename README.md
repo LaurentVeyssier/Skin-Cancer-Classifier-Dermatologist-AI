@@ -111,7 +111,12 @@ Once the CSV file is obtained, the notebook provides the scores for task_1, task
 
 I achieved my best results with Inception-V3. However I could not go over the 65% overall accuracy mark. Depending on the settings and architectures I tried, I got models performing particularly well either on Nevus or seborrheic keratosis (over 85% accuracy). Melanoma classification remained quite low and disappointing. This might be due to the training set, lack of color / luminescence normalization, or too big heterogeneity between training and test sets.
 
-I tried an ensemble approach, combining three models, each selected as the best to classify one class. This approach to combine the best classifiers did not prove successful either, likely due to the penalty from the poor performance on melanoma.
+Other parameters:
+- Adam optimizer, lr of 10-4 to 10-6
+- Batch of 10 with large images, 64 with standard input size
+- Torch CrossEntropyLoss
+
+Finally, I tried an ensemble approach, combining three models, each selected as the best to classify one class. This approach to combine the best classifiers did not prove successful either, possibly due to the penalty from the poor performance on melanoma.
 
 ![](asset/accuracy.png)
 
