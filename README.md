@@ -46,18 +46,18 @@ The proposed training, validation and test sets contain 2000, 160, 600 high-res 
 
 ![](asset/sample_removed.png)
 
-The training dataset had the following final composition:
+The training dataset has the following final composition:
 
 ![](asset/train_set.png)
 
 It is also possible to compensate class imbalance in the training set by calculating weights to provide to the loss function during training. I did not use this option in the final runs.
 
-During training, I used various augmentation techniques for the training set to expand beyond the circa 3,700 images now available. In addition, available images came with multiple resolutions (for example (2592, 1936, 3)). The pre-trained models must have input images with minimum resolution of 299x299 (for Inception) or 224x224 (other models). In order to preserve details as much as possible (downsampling of images is at the expense of pixels), I determined the smallest dimensions available in the dataset, ie 450 x 576, and decided to resize images to that maximum possible uniform size. This obviously increase memory and computation requierements and necessitate to reduce the batch_size to avoid memory crash.
+During training, I used various augmentation techniques for the training set to expand beyond the circa 3,700 images now available. In addition, available images came with multiple resolutions (for example (2592, 1936, 3)). The pre-trained models must have input images with minimum resolution of 299x299 (for Inception) or 224x224 (other models). In order to preserve details as much as possible (downsampling of images is at the expense of pixels), I determined the smallest dimensions available in the dataset, ie 450 x 576, and decided to resize images to that maximum possible uniform size. However I did not see any material difference vs using standard input size while this obviously increases memory and computation requierements and necessitate to reduce the batch_size to avoid memory crash especially when using google colab.
 
 ## Model architecture
-VGG model did not deliver the best performance (below 55% accuracy after 10 epochs). Note that random guess over the 3 classes is 33%. Inception V3 reached 64% overall accuracy after 10 epochs. So I focused on this model.
+VGG model did not deliver the good performance (below 55% accuracy after 10 epochs). Note that random guess over the 3 classes is 33%. ResNet152 either. Inception V3 reached 65% overall accuracy after 10 epochs. So I focused on this model.
 
-Recap on Inception V3 architecture (inspired from this [paper](https://medium.com/@sh.tsang/review-inception-v3-1st-runner-up-image-classification-in-ilsvrc-2015-17915421f77c)).
+*Recap on Inception V3 architecture* (inspired from this [paper](https://medium.com/@sh.tsang/review-inception-v3-1st-runner-up-image-classification-in-ilsvrc-2015-17915421f77c)).
 Inception V3 is an improvement over previous versions of this architecture. The V3 objective was to reduce the number of parameters so that the model is less computational intensive, less prone to overfitting and allows to go really deep. This was proposed in the following [paper](https://arxiv.org/abs/1512.00567) published by V3's creators at Google in 2015.
 The network as 42 layers overall. The reduction in parameters is achieved using various techniques. The techniques include factorized convolutions, regularization, dimension reduction, and parallelized computations.
 -	Factorization: The aim of factorizing convolutions is to reduce the number of connections/parameters without decreasing the network efficiency. Factorization is performed by switching large kernel-size convolutions to smaller ones: convolutions involving large kernel size (5x5 or 7x7) are replaced by successive smaller size convolutions. Ex: 5x5 -> two 3x3. This allows to reduce the number of parameters from 5 x 5 = 25 to 3 x 3 + 3 x 3 = 18 which is nearly 30% less. Consequently, Inception's Module A is replaced using convolution factorization.
@@ -83,12 +83,12 @@ Overall, Inception V3 model has 24 million parameters, which is only 17% of VGG.
 
 ![](asset/inceptionV3.png)
 
-
+*Short highlights on ResNet152:*
 ResNet152 was designed by Microsoft teams in 2015 to provide a class of network efficient despite being very deep (cf [paper](https://arxiv.org/abs/1512.03385)). This version is the deepest amongst ResNet family. ResNet stands for "residual network". The main novalty is the introduction of skip connections using a technique called "residual mapping" to fight against deep network's performance degradation. Residual mapping allows shortcut connections using identify F(x)+x (see illustration below). 
 
 ![](asset/residuallearning.png)  
 
-ResNet class achieves higher accuracy when the depth of the network increases, producing results that are better than standard networks. The table below shows the layers and parameters in the different ResNet architectures.
+ResNet class achieves higher accuracy when the depth of the network increases, producing results that are better than standard networks. The table below shows the layers and parameters in the different ResNet architectures. Yet this model has over 58 Mio parameters, twice as much as Inception-V3.
 
  ![](asset/resnet.png)
  
@@ -108,6 +108,10 @@ The file has exactly 3 columns:
 Once the CSV file is obtained, the notebook provides the scores for task_1, task_2 and the average of both. It also provides the corresponding ROC curves, along with the confusion matrix corresponding to melanoma classification.
 
 ## Results
+
+I achieved my best results with Inception-V3. However I could not go over the 65% overall accuracy mark. Depending on the settings and architectures I tried, I got models performing particularly well either on Nevus or seborrheic keratosis (over 85% accuracy). Melanoma classification remained quite low and disappointing. This might be due to the training set, lack of color / luminescence normalization, or too big heterogeneity between training and test sets.
+
+I tried an ensemble approach, combining three models, each selected as the best to classify one class. This approach to combine the best classifiers did not prove successful either, likely due to the penalty from the poor performance on melanoma.
 
 ![](asset/accuracy.png)
 
