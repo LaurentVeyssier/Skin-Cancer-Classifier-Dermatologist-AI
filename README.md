@@ -4,7 +4,7 @@ Use CNN model to visually diagnose between 3 types of skin lesions using dermosc
 This "Dermatologist-ai" project is part of the [Deep Learning Nanodegree with Udacity](https://www.udacity.com/course/deep-learning-nanodegree--nd101). The skin cancer classification model was trained and tested using both own GPU and google colab.
 
 ## Description
-This project can visually diagnose between 3 types of skin lesions: melanoma, the deadliest form of skin cancer, and two types of benign lesions, nevi and seborrheic keratoses.
+This project can visually diagnose between 3 types of skin lesions: melanoma, the deadliest form of skin cancer, and two types of benign lesions, nevi and seborrheic keratoses. 84% overall performance achieved on unseen test set. 
 
 The data and objective are pulled from the [2017 ISIC Challenge on Skin Lesion Analysis Towards Melanoma Detection](https://challenge.kitware.com/#challenge/583f126bcad3a51cc66c8d9a). As part of the challenge, participants were tasked to design an algorithm to diagnose skin lesion images as one of three different skin diseases (melanoma, nevus, or seborrheic keratosis).
 
@@ -55,7 +55,7 @@ It is also possible to compensate class imbalance in the training set by calcula
 During training, I used various augmentation techniques for the training set to expand beyond the circa 3,700 images now available. In addition, available images came with multiple resolutions (for example (2592, 1936, 3)). The pre-trained models must have input images with minimum resolution of 299x299 (for Inception) or 224x224 (other models). In order to preserve details as much as possible (downsampling of images is at the expense of pixels), I determined the smallest dimensions available in the dataset, ie 450 x 576, and decided to resize images to that maximum possible uniform size. However I did not see any material difference vs using standard input size while this obviously increases memory and computation requierements and necessitate to reduce the batch_size to avoid memory crash.
 
 ## Model architecture
-VGG model did not deliver good performance (below 55% accuracy after 10 epochs). Note that random guess over the 3 classes is 33%. ResNet152 neither. Inception V3 reached 65% overall accuracy after 10 epochs. ResNet50 achieved over 70% accuracy after 15 epochs so I focused on this model.
+VGG model did not deliver good performance (below 55% accuracy after 10 epochs). Note that random guess over the 3 classes is 33%. ResNet152 neither. Inception V3 reached 65% overall accuracy after 10 epochs. ResNet50 achieved over 70% accuracy after 15 epochs so I focused on this model to improve that basepoint.
 
 *Recap highlights ResNet architecture:*
 ResNet was designed by Microsoft teams in 2015 to provide a class of network efficient despite being very deep. ResNet152 version is the deepest amongst ResNet family. ResNet stands for "residual network". The main novalty is the introduction of shortcut connections using a technique called "residual mapping" to fight against deep network's performance degradation. Usually, a deep convolutional network will learn low/mid/high level features at the end of its stacked layers. In residual mapping, instead of trying to learn some features, the layer learns some residual which is the subtraction of feature learned from the input of that layer. ResNet does this using shortcut connections (directly connecting input of n-th layer to some (n+x)th layer). Training this form of networks is easier than training simple deep convolutional neural networks and it resolves the problem of degrading accuracy as the network gets very deep. Residual mapping introduces shortcut connections using identity F(x)+x where F(x) is the residual let to be learned by the conv layers/blocks (see illustration below). For more information, refer to the founding [paper](https://arxiv.org/abs/1512.03385).
@@ -73,9 +73,9 @@ ResNet class produces results that are better than standard networks, ie achieve
 With 50 layers, ResNet50 has just over 26 Mio parameters. I used a modified version, adjusting the classifier down to 3 classes (using 2 fully-connected layers with drop out and ELU activation). This led to 25.6 Mio parameters in total.
 
 - Training:
-I started off with a pretrained version of ResNet50 allowing all layers to be fined-tuned while training the new classifier end. After 15 epochs (Adam optimizer, lr of 10-4, batch of 10 images 224x224) the network achieved 73% overall accuracy on the test set (unseen images). I trained for another 20 epochs with a reduced learning rate of 10-5. The test accuracy improved to 82% with good performance accross the three classes (see Results section below). Additional training would certainly allow to improve even further.
+I started off with a pretrained version of ResNet50 allowing all layers to be fined-tuned while training the new classifier end. After 15 epochs (Adam optimizer, lr of 10-4, batch of 10 images 224x224) the network achieved 73% overall accuracy on the test set (unseen images). I trained for another 20 epochs with a reduced learning rate of 10-5. And a further 5 epochs @ 10-6. The test accuracy improved to 84% with good performance accross the three classes (see accuracies below). Additional training could certainly allow to improve even further.
 
-![](asset/lossresnet50.png)                 ![](asset/accuracy.png) 
+![](asset/lossresnet50.png)                 ![](asset/accuracy .png) 
 
 
 *Highlights Inception V3 architecture* (inspired from this [paper](https://medium.com/@sh.tsang/review-inception-v3-1st-runner-up-image-classification-in-ilsvrc-2015-17915421f77c)).
