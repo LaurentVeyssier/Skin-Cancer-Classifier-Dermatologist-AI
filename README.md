@@ -121,3 +121,5 @@ Finally, I tried an ensemble approach, combining three models, each selected as 
 ![](asset/accuracy.png)
 
 ![](asset/ROC.png)   ![](asset/ROC-inception.png)
+
+For explainations on ROC curve (Receiver Operating Characteristic) also called AUC (Area Under the Curve), you can see this [video](https://www.youtube.com/watch?v=OAl6eAyP-yo).
