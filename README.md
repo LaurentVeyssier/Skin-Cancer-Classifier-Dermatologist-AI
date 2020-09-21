@@ -121,9 +121,7 @@ I achieved my best results with ResNet50. Key parameters:
 - Torch CrossEntropyLoss
 - 35 epochs in total
 
-![](asset/ accuracy.png)
-
-![](asset/ ROC.png)
+![](asset/accuracy.png)                                ![](asset/ROC.png)
 
 For explainations on ROC curve (Receiver Operating Characteristic) also called AUC (Area Under the Curve), you can see this [video](https://www.youtube.com/watch?v=OAl6eAyP-yo). In a nutshell a good classifier, ie separating well the two classes in a binary classification like task 1 and task 2 questions above, will get a high AUC (close to 1). In our case, excellent performance achieved with task 2. A poor classifier would get close to the diagonal line with an AUC value towards 0.5 (random guessing). The performance achieved on task 1 (predicting melanoma or not) can be further improved. Ideally we want a 'True positive rate' (ratio between case detected positive when actually positive over all actual positive) close to 1 (we do not want to miss a melanoma when there is one since this is deadly) with a 'False positive rate' is kept as low as possible (so that not to spend unnecessary investigations on healthy people). False Positive Rate is the ratio between healthy samples misclassified as positive over all heathy samples. The Task1 curve profile is not satisfying and should be like Task2 profile.
 
