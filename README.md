@@ -60,7 +60,7 @@ VGG model did not deliver good performance (below 55% accuracy after 10 epochs).
 *Recap highlights ResNet architecture:*
 ResNet was designed by Microsoft teams in 2015 to provide a class of network efficient despite being very deep. ResNet152 version is the deepest amongst ResNet family. ResNet stands for "residual network". The main novalty is the introduction of shortcut connections using a technique called "residual mapping" to fight against deep network's performance degradation. Usually, a deep convolutional network will learn low/mid/high level features at the end of its stacked layers. In residual mapping, instead of trying to learn some features, the layer learns some residual which is the subtraction of feature learned from the input of that layer. ResNet does this using shortcut connections (directly connecting input of n-th layer to some (n+x)th layer). Training this form of networks is easier than training simple deep convolutional neural networks and it resolves the problem of degrading accuracy as the network gets very deep. Residual mapping introduces shortcut connections using identity F(x)+x where F(x) is the residual let to be learned by the conv layers/blocks (see illustration below). For more information, refer to the founding [paper](https://arxiv.org/abs/1512.03385).
 
-![](asset/residuallearning.png)  
+![](asset/residuallearning.png)                     ![](asset/typicalresidual.png)  
 
 ResNet class produces results that are better than standard networks, ie achieves higher accuracy, when the depth of the network increases. The table below shows the layers and parameters in the different ResNet architectures. ResNet152 has over 58 Mio parameters, twice as much as Inception-V3.
 
