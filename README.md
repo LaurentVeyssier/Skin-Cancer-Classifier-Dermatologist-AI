@@ -122,4 +122,4 @@ Finally, I tried an ensemble approach, combining three models, each selected as 
 
 ![](asset/ROC.png)   ![](asset/ROC-inception.png)
 
-For explainations on ROC curve (Receiver Operating Characteristic) also called AUC (Area Under the Curve), you can see this [video](https://www.youtube.com/watch?v=OAl6eAyP-yo).
+For explainations on ROC curve (Receiver Operating Characteristic) also called AUC (Area Under the Curve), you can see this [video](https://www.youtube.com/watch?v=OAl6eAyP-yo). In a nutshell a good classifier, ie separating well the two classes in a binary classification like task 1 and task 2 questions above, will get a high AUC (close to 1). In our case, reasonable performance achieved with task 2. A poor classifier will get closer to the diagonal line with an AUC closer to 0.5 (random guessing). This is what happens here for task 1 (predicting melanoma or not).
