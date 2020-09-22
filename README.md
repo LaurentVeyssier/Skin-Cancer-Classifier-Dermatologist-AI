@@ -73,7 +73,7 @@ ResNet class produces results that are better than standard networks, ie achieve
 
 ![](asset/resnet152.png)
 
-With 50 layers, ResNet50 has just over 26 Mio parameters. I used a modified version, adjusting the classifier down to 3 classes (using 2 fully-connected layers with drop out and ELU activation). This led to 25.6 Mio parameters in total.
+With 50 layers, ResNet50 is just below 26 Mio parameters. I used a modified version, adjusting the classifier down to 3 classes (using 2 fully-connected layers with drop out and ELU activation). This led to 25.6 Mio parameters in total.
 
 - Training:
 I started off with a pretrained version of ResNet50 allowing all layers to be fined-tuned while training the new classifier end. After 15 epochs (Adam optimizer, lr of 10-4, batch of 10 images 224x224) the network achieved 73% overall accuracy on the test set (unseen images). I trained for another 20 epochs with a reduced learning rate of 10-5. And a further 5 epochs @ 10-6. The test accuracy improved to 84% with good performance accross the three classes (see accuracies below). Additional training could certainly allow to improve even further.
