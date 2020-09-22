@@ -60,7 +60,7 @@ So ultimately I tried training the whole network initialized with the pretrained
 - ResNet50 achieved over 70% accuracy after 15 epochs so I focused on this model to improve that basepoint up to 84% (see results section below).
 - Finally I re-ran this experiment with Inception V3 pre-trained, using a simple classifier end: FC layer (2048,1024)>Relu>DropOut(0.1)>FC layer (1024,3)...and reached 86% accuracy after 15 epochs (7.5 hours training on google colab with Tesla K80 GPU).
 
-*Recap highlights ResNet architecture:*
+*Highlights ResNet architecture:*
 ResNet was designed by Microsoft teams in 2015 to provide a class of network efficient despite being very deep. ResNet152 version is the deepest amongst ResNet family. ResNet stands for "residual network". The main novalty is the introduction of shortcut connections using a technique called "residual mapping" to fight against deep network's performance degradation. Usually, a deep convolutional network will learn low/mid/high level features at the end of its stacked layers. In residual mapping, instead of trying to learn some features, the layer learns some residual which is the subtraction of feature learned from the input of that layer. ResNet does this using shortcut connections (directly connecting input of n-th layer to some (n+x)th layer). Training this form of networks is easier than training simple deep convolutional neural networks and it resolves the problem of degrading accuracy as the network gets very deep. Residual mapping introduces shortcut connections using identity F(x)+x where F(x) is the residual let to be learned by the conv layers/blocks (see illustration below). For more information, refer to the founding [paper](https://arxiv.org/abs/1512.03385).
 
 ![](asset/residuallearning.png)                     ![](asset/typicalresidual.png)  
@@ -130,12 +130,11 @@ I achieved my best results with ResNet50 and Inception V3. Key parameters:
 - Torch CrossEntropyLoss
 - 15 epochs (Inception) to 35 epochs in total (ResNet). ResNet has 50% more parameters than Inception which can partly explain the quicker convergence. However training Inception proved to be significantly much longer on Google Colab vs my own GPU I used for ResNet.
 
-![](asset/ROCInception.png)   ![](asset/ROC.png)
+- ROC curve achieved with Inception V3
+![](asset/ROCInception.png)
 
 For explainations on ROC curve (Receiver Operating Characteristic) also called AUC (Area Under the Curve), you can see this [video](https://www.youtube.com/watch?v=OAl6eAyP-yo). In a nutshell a good classifier, ie separating well the two classes in a binary classification like task 1 and task 2 questions above, will get a high AUC (close to 1). A poor classifier would get close to the diagonal line with an AUC value towards 0.5 (random guessing).
 
-In our case, excellent performance achieved with task 2.
+In our case, good performance achieved with task 2.
 
-The performance achieved on task 1 (predicting melanoma or not) can be further improved. Ideally we want a 'True positive rate' (ratio between case detected positive when actually positive over all actual positive) close to 1 (we do not want to miss a melanoma when there is one since this is deadly). Meanwhile we want a 'False positive rate' kept as low as possible (so that not to spend unnecessary investigations on healthy people). False Positive Rate is the ratio between healthy samples misclassified as positive over all heathy samples. The Task 1 curve is not satisfying and should be like Task 2 profile.
-
-- Note on Inception V3 : I could not go over the 65% overall accuracy mark with Inception-V3. Depending on the settings and architectures I tried, I got models performing particularly well either on Nevus or seborrheic keratosis (over 85% accuracy). Melanoma classification remained quite low and disappointing.
+The performance achieved on task 1 (predicting melanoma or not) can be further improved. Ideally we want a 'True positive rate' (ratio between case detected positive when actually positive over all actual positive) close to 1 (we do not want to miss a melanoma when there is one since this is deadly). Meanwhile we want a 'False positive rate' kept as low as possible (so that not to spend unnecessary investigations on healthy people). False Positive Rate is the ratio between healthy samples misclassified as positive over all heathy samples. The Task 1 curve is not yet satisfying and should be like Task 2's profile.
