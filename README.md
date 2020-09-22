@@ -128,7 +128,7 @@ I achieved my best results with ResNet50 and Inception V3. Key parameters:
 - Adam optimizer, lr of 10-4 to 10-5
 - Batch of 10 images 224 x 224 (ResNet), 32 images 299 x 299 (Inception)
 - Torch CrossEntropyLoss
-- 15 epochs (Inception) to 35 epochs in total (ResNet). ResNet has 50% more parameters than Inception which can partly explain the quicker convergence. However training Inception proved to be significantly much longer on Google Colab vs my own GPU I used for ResNet.
+- 15 epochs (Inception) to 35 epochs in total (ResNet). ResNet has 7% more parameters than Inception (25.6Mio vs 23.9Mio) which cannot explain the quicker convergence. However training Inception proved to be significantly much longer on Google Colab vs my own GPU I used for ResNet.
 
 - ROC curve achieved with Inception V3
 ![](asset/ROCInception.png)
