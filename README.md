@@ -1,4 +1,4 @@
-# Skin-Cancer-Classifier
+# Skin-Cancer-Classifier-Dermatologist-AI
 Use CNN model to visually diagnose between 3 types of skin lesions using dermoscopic images.
 
 This "Dermatologist-ai" project is part of the [Deep Learning Nanodegree with Udacity](https://www.udacity.com/course/deep-learning-nanodegree--nd101). The skin cancer classification model was trained and tested using both own GPU and google colab.
