@@ -118,6 +118,10 @@ I started off with a pretrained version of Inception V3 allowing all layers to b
 
 ![](asset/lossInception.png)          ![](asset/accuracyInception.png) 
 
+Note that the race to develop higher performing models continues and newer models emerged since those discussed above. For example DenseNet uses the idea that may be useful to reference feature maps from earlier in the network, in a similar but different approach to ResNet. Each layer's feature map is concatenated to the input of every successive layer within a dense block. This allows later layers within the network to directly leverage the features from earlier layers, encouraging feature reuse within the network. This re-use also allows to rely on small output channel depth of 12 filters only vastly reducing complexity! This network architecture was reported to outperfom ResNet at a much cheaper cost. And this goes on and on....
+
+![](asset/DenseNet.png)          ![](asset/DenseNet vs ResNet.png)
+
 ## Getting the Results
 Once the model is trained, the notebook creates a CSV file to store test predictions. The file has exactly 600 rows, each corresponding to a different test image, plus a header row. You can find an example submission file (`sample_submission.csv`) in the repository.
 
